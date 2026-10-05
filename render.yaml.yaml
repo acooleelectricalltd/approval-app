@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: acoole-portal
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      mkdir -p .streamlit
+      echo "$SECRETS_TOML" > .streamlit/secrets.toml
+    startCommand: streamlit run webapp.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRETS_TOML
+        sync: false
